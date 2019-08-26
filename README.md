@@ -7,7 +7,7 @@
 ```
 $Xaml = Get-Content ".\gui\MainWindow.xaml"
 $Xaml = $Xaml | Out-String
-$global:Config.Add("window",(convertTo-AvaloniaWindow -Xaml $Xaml))
+$window = convertTo-AvaloniaWindow -Xaml $Xaml
 
 
 class viewmodelbase : ReactiveUI.ReactiveObject{}
@@ -18,7 +18,7 @@ class MainWindowViewModel : viewmodelbase {
 
 $ViewModel = [MainWindowViewModel]::New()
 
-$config.Window.DataContext = $ViewModel
+$window.DataContext = $ViewModel
 ```
 
 This creates a new data context, with the binding of greeting. In the XAML:
