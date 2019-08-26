@@ -2,11 +2,42 @@
 
 [Avalonia](http://avaloniaui.net/) bindings for PowerShell
 
+## This Fork Contains The Ability To Use ReactiveUI. This allows bindings. To give an example for reference:
+
+```
+$Xaml = Get-Content ".\gui\MainWindow.xaml"
+$Xaml = $Xaml | Out-String
+$global:Config.Add("window",(convertTo-AvaloniaWindow -Xaml $Xaml))
+
+
+class viewmodelbase : ReactiveUI.ReactiveObject{}
+
+class MainWindowViewModel : viewmodelbase {
+    [String]$Greeting = "Hello World!"
+}
+
+$ViewModel = [MainWindowViewModel]::New()
+
+$config.Window.DataContext = $ViewModel
+```
+
+This creates a new data context, with the binding of greeting. In the XAML:
+
+```
+<TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+````
+
+Will output "Hello World!"
+
+## This Fork Also Allows DataGrids.
+
 ## Avalonia
 
 [Avalonia is a WPF-style, cross-platform UI library](http://avaloniaui.net/). It works with .NET Core and on Linux, Windows and MacOS.
 
-## Available Commands 
+## Available Commands $ViewModel = [MainWindowViewModel]::New()
+
+$config.Window.DataContext = $ViewModel
 
 - Show-AvaloniaWindow
 - ConvertTo-AvaloniaWindow
