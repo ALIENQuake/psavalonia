@@ -31,6 +31,10 @@ Will output "Hello World!"
 
 ## This Fork Also Allows DataGrids.
 
+## Note:
+
+I am using the updated libs that are generated when I make a new avalonia project, within the net461 folder. The current library is out of date. I am downloading module, then copying new .dll into the 1.0 folder.
+
 ## Avalonia
 
 [Avalonia is a WPF-style, cross-platform UI library](http://avaloniaui.net/). It works with .NET Core and on Linux, Windows and MacOS.
