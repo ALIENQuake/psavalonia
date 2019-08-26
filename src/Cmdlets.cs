@@ -12,12 +12,13 @@ namespace PSAvalonia
         public string Xaml { get; set; }
 
         protected override void ProcessRecord() {
-            var window = AvaloniaBootstrapper.Load(Xaml);
+			var dataGridType = typeof(DataGrid); // HACK
+			var window = AvaloniaBootstrapper.Load(Xaml);
             WriteObject(window);
         }
     }
 
-    [Cmdlet(VerbsCommon.Find, "AvaloniaControl")]
+	[Cmdlet(VerbsCommon.Find, "AvaloniaControl")]
     public class FindAvaloniaControl : PSCmdlet
     {
         [Parameter(Mandatory = true)]

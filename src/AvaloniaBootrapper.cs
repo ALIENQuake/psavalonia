@@ -16,16 +16,16 @@ namespace PSAvalonia
             new CustomAssemblyLoadContext().LoadNativeLibraries();
             new CustomAssemblyLoadContext().LoadLibs();
             App = new App();
-            AppBuilder.Configure(App).UsePlatformDetect().SetupWithoutStarting();
-        }
+            AppBuilder.Configure(App).UseDataGrid().UseReactiveUI().UsePlatformDetect().SetupWithoutStarting();
+		}
 
-        public static void ForceInit()
+		public static void ForceInit()
         {
 
         }
 
         public static Window Load(string xaml) {
-            var loader = new AvaloniaXamlLoader();
+			var loader = new AvaloniaXamlLoader();
             return (Window)loader.Load(xaml);
         }
 
