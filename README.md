@@ -21,15 +21,83 @@ $ViewModel = [MainWindowViewModel]::New()
 $window.DataContext = $ViewModel
 ```
 
+Will output "Hello World!"
+
 This creates a new data context, with the binding of greeting. In the XAML:
 
 ```
 <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 ````
 
-Will output "Hello World!"
+## Building Bindings
+
+```
+class MainWindowViewModel : ViewModelbase {
+    [String]                 $Greeting = "Hello World"
+    [stat[]]                 $Stats
+
+    [void] Change_Stat([stat[]]$Data) {
+        $This.Stats = $Data
+        $this.RaisePropertyChanged("Stats")
+    }
+
+    [void] Change_Greeting([String]$Value) {
+        $this.Greeting = $Value
+        $this.RaisePropertyChanged("Greeting")
+    }
+}
+```
+
+In the above model, I can now change Greeting by simply calling:
+
+```
+$Window.DataContext.Change_Greeting("Whaaaazzzzuppp!")
+```
+
+Greeting will now switch from "Hello World!" to "Whaaaazzzuppp!" interactively.
 
 ## This Fork Also Allows DataGrids.
+
+In our above class, MainWindowViewModel we have a property of $Stats. Lets make a class for it:
+
+```
+class stat {
+    [string]$Type
+    [string]$Name
+    [string]$Item
+    [string]$Value
+    [string]$Total
+
+    stat([string]$Type, [String]$Name, [string]$Item, [String]$Value, [String]$Total) {
+        [string]$this.Type = $Type
+        [string]$this.Name = $Name
+        [string]$this.Item = $Item
+        [string]$this.Value = $Value
+        [string]$this.Total = $Total
+    }
+}
+```
+
+Now we can generate a new stat, but to build a data grid, we want multiple rows, so we make an array of stat.
+
+```
+$Stat_Array = @()
+$Stat_Array += [stat]::New("Apple","Red Apple","Apple Jack Farms", "$10.00", "50")
+$Stat_Array += [stat]::New("Corn","Yellow Corn","Farmer Dan", "$9.00", "25")
+$Stat_Array += [stat]::New("Peppers","Red Peppers","Casa Peppers Ranch", "$5.50", "40")
+```
+
+Now we change the binding:
+
+```
+$Window.DataContext.Change_Stat($Stat_Array)
+```
+
+Now building a data grid, and binding the "Items" to 'Stats', will allow you see the grid.
+
+```
+<DataGrid AutoGenerateColumns="True" RowBackground="White" AlternatingRowBackground="LightGray" GridLinesVisibility="All" Name="Data_Grid" HorizontalGridLinesBrush="Black" VerticalGridLinesBrush="Black" HorizontalAlignment="Left" MaxWidth="722" IsReadOnly="True" Items="{Binding Stats}" />
+```
 
 ## Note:
 
