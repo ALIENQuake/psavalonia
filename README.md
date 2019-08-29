@@ -1,6 +1,6 @@
 # PSAvalonia
 
-[Avalonia](http://avaloniaui.net/) bindings for PowerShell
+[Avalonia](http://avaloniaui.net/) bindings for PowerShell. I did not create these bindings, only added/improved them for extra features. You will have to add the .dll manually to the module, and replace the current ones in order to use. This module was written for Avalonia 0.8.2 version.
 
 ## This Fork Contains The Ability To Use ReactiveUI. This allows bindings. To give an example for reference:
 
