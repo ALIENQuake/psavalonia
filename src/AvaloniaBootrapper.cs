@@ -12,20 +12,17 @@ namespace PSAvalonia
         private static CancellationTokenSource _source;
         private static List<Window> _usedWindows = new List<Window>();
 
-        static AvaloniaBootstrapper() {
+        static AvaloniaBootstrapper() 
+	{
             new CustomAssemblyLoadContext().LoadNativeLibraries();
             new CustomAssemblyLoadContext().LoadLibs();
             App = new App();
             AppBuilder.Configure(App).UseDataGrid().UseReactiveUI().UsePlatformDetect().SetupWithoutStarting();
-		}
+	}
 
-	public static void ForceInit()
-        {
-
-        }
-
-        public static Window Load(string xaml) {
-			var loader = new AvaloniaXamlLoader();
+        public static Window Load(string xaml) 
+	{
+	    var loader = new AvaloniaXamlLoader();
             return (Window)loader.Load(xaml);
         }
 
