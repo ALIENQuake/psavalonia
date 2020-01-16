@@ -19,7 +19,7 @@ namespace PSAvalonia
             AppBuilder.Configure(App).UseDataGrid().UseReactiveUI().UsePlatformDetect().SetupWithoutStarting();
 		}
 
-		public static void ForceInit()
+	public static void ForceInit()
         {
 
         }
