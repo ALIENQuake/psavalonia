@@ -17,7 +17,7 @@ namespace PSAvalonia
             new CustomAssemblyLoadContext().LoadNativeLibraries();
             new CustomAssemblyLoadContext().LoadLibs();
             App = new App();
-            AppBuilder.Configure(App).UseDataGrid().UseReactiveUI().UsePlatformDetect().SetupWithoutStarting();
+            AppBuilder.Configure(App).UseReactiveUI().UsePlatformDetect().SetupWithoutStarting();
 	}
 
         public static Window Load(string xaml) 
