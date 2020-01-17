@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using Microsoft.DotNet.PlatformAbstractions;
-using System.Threading.Tasks;
 
 namespace PSAvalonia
 {
 	using System.Reflection;
-    using System.Runtime.InteropServices;
+	using System.Runtime.InteropServices;
 
-    public class CustomAssemblyLoadContext 
+	public class CustomAssemblyLoadContext
 	{
 		[DllImport("kernel32")]
 		private static extern IntPtr LoadLibrary(string path);
@@ -36,7 +32,8 @@ namespace PSAvalonia
 			}
 
 			IntPtr libraryHandle = IntPtr.Zero;
-			try {
+			try
+			{
 				var libraryPath = Path.Combine(assemblyBasePath, unmanagedDllName);
 				libraryHandle =
 					System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
@@ -48,53 +45,61 @@ namespace PSAvalonia
 					throw new DllNotFoundException(unmanagedDllName);
 				}
 			}
-			catch {
+			catch
+			{
 
 			}
-		
+
 			//BUG: Leaky handle
 			return libraryHandle;
 		}
 
-		private string GetNativeFolder() {
+		private string GetNativeFolder()
+		{
 			var processArch = IntPtr.Size == 8 ? "x64" : "x86";
-			if (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture == Architecture.Arm) {
+			if (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture == Architecture.Arm)
+			{
 				processArch = "arm";
 			}
 
-			if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
+			if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+			{
 				return "win-" + processArch;
 			}
 
-			if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) {
+			if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+			{
 				return "linux-" + processArch;
 			}
 
-			if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.OSX)) {
+			if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+			{
 				return "osx";
 			}
 
 			throw new Exception("Operating system not supported: " + Microsoft.DotNet.PlatformAbstractions.RuntimeEnvironment.GetRuntimeIdentifier());
 		}
 
-		public void LoadLibs() {
+		public void LoadLibs()
+		{
 			var libFolder = System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "win" : "unix";
 			var assemblyBasePath = Path.GetDirectoryName(this.GetType().GetTypeInfo().Assembly.Location);
-			var nativePath = Path.Combine(assemblyBasePath, "runtimes", libFolder, "lib", "netcoreapp2.0");
-			
-			if (!Directory.Exists(nativePath)) {
+			var nativePath = Path.Combine(assemblyBasePath, "runtimes", libFolder, "lib", "netcoreapp3.0");
+
+			if (!Directory.Exists(nativePath))
+			{
 				return;
 			}
 
 			foreach (var nativeFile in Directory.GetFiles(nativePath))
 			{
-                try
-                {
-                    Assembly.LoadFrom(nativeFile);
-                }
+				try
+				{
+					Assembly.LoadFrom(nativeFile);
+				}
 				catch (Exception)
-                {
-                }
+				{
+				}
 			}
 		}
 
@@ -102,8 +107,9 @@ namespace PSAvalonia
 		{
 			var assemblyBasePath = Path.GetDirectoryName(this.GetType().GetTypeInfo().Assembly.Location);
 			var nativePath = Path.Combine(assemblyBasePath, "runtimes", GetNativeFolder(), "native");
- 
-			if (!Directory.Exists(nativePath)) {
+
+			if (!Directory.Exists(nativePath))
+			{
 				return;
 			}
 

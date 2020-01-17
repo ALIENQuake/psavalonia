@@ -1,6 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.1</TargetFrameworks>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <ApplicationIcon />
+    <OutputType>Library</OutputType>
+    <StartupObject />
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
     <Compile Update="**\*.xaml.cs">
@@ -11,11 +15,14 @@
     </AvaloniaResource>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.8.2" />
-    <PackageReference Include="Avalonia.Controls.DataGrid" Version="0.8.2" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.8.2" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.8.2" />
-    <PackageReference Include="Microsoft.DotNet.PlatformAbstractions" Version="2.1.0" />
-    <PackageReference Include="PowerShellStandard.Library" Version="5.1.1" />
+    <None Remove="psavalonia.psd1" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="0.9.1" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="0.9.1" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.9.1" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.1" />
+    <PackageReference Include="Microsoft.DotNet.PlatformAbstractions" Version="3.1.1" />
+    <PackageReference Include="Microsoft.PowerShell.5.ReferenceAssemblies" Version="1.0.0" />
   </ItemGroup>
 </Project>

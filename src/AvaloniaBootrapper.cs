@@ -1,31 +1,37 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using System.Collections.Generic;
+using Avalonia.ReactiveUI;
 using System.Linq;
 using System.Threading;
 
 namespace PSAvalonia
 {
-    public static class AvaloniaBootstrapper {
+    public static class AvaloniaBootstrapper
+    {
         public static App App;
         private static CancellationTokenSource _source;
         private static List<Window> _usedWindows = new List<Window>();
 
-        static AvaloniaBootstrapper() {
-            new CustomAssemblyLoadContext().LoadNativeLibraries();
-            new CustomAssemblyLoadContext().LoadLibs();
-            App = new App();
-            AppBuilder.Configure(App).UseDataGrid().UseReactiveUI().UsePlatformDetect().SetupWithoutStarting();
-		}
-
-		public static void ForceInit()
+        private static AppBuilder BuildAvaloniaApp()
         {
-
+            var lifetime = new ClassicDesktopStyleApplicationLifetime();
+            lifetime.ShutdownMode = ShutdownMode.OnMainWindowClose;
+            return AppBuilder.Configure<App>().UseReactiveUI().UsePlatformDetect().SetupWithLifetime(lifetime);
         }
 
-        public static Window Load(string xaml) {
-			var loader = new AvaloniaXamlLoader();
+        static AvaloniaBootstrapper()
+        {
+            new CustomAssemblyLoadContext().LoadNativeLibraries();
+            new CustomAssemblyLoadContext().LoadLibs();
+            App = (App)BuildAvaloniaApp().Instance;
+        }
+
+        public static Window Load(string xaml)
+        {
+            var loader = new AvaloniaXamlLoader();
             return (Window)loader.Load(xaml);
         }
 
