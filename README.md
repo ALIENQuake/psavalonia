@@ -1,5 +1,7 @@
 # PSAvalonia
 
+Version 2.0
+
 [Avalonia](http://avaloniaui.net/) bindings for PowerShell. I did not create these bindings, only added/improved them for extra features. You will have to add the .dll manually to the module, and replace the current ones in order to use. This module was written for Avalonia 0.8.2 version.
 
 ## This Fork Contains The Ability To Use ReactiveUI. This allows bindings. To give an example for reference:
@@ -149,3 +151,10 @@ _Script Running on Linux_
 
 - 6.2 
 - 7.0
+
+## Direct Methods.
+
+2.0 Contains methods on top of cmdlets.
+[GUI]::CreateWindow([String]$xaml)
+[GUI]::FindControl([String]$name)
+[GUI]::ShowWindow([Window]$Window)
