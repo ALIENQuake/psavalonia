@@ -155,6 +155,8 @@ _Script Running on Linux_
 ## Direct Methods.
 
 2.0 Contains methods on top of cmdlets.
+```
 [GUI]::CreateWindow([String]$xaml)
 [GUI]::FindControl([String]$name)
 [GUI]::ShowWindow([Window]$Window)
+```
