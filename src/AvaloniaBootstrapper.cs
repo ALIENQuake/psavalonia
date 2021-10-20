@@ -6,21 +6,10 @@ using System.Collections.Generic;
 using Avalonia.ReactiveUI;
 using System.Linq;
 using System.Threading;
+using System;
 
 namespace PSAvalonia
 {
-    public class BootstrapWindow : Window
-    {
-        public BootstrapWindow(string xaml)
-        {
-            InitializeComponent(xaml);
-        }
-
-        private void InitializeComponent(string xaml)
-        {
-            AvaloniaXamlLoader.Load(xaml);
-        }
-    }
     public static class AvaloniaBootstrapper
     {
         public static App App;
@@ -43,8 +32,9 @@ namespace PSAvalonia
 
         public static Window Load(string xaml)
         {
-            BootstrapWindow win = new BootstrapWindow(xaml);
-            return win;
+            Uri uri = new Uri(xaml, UriKind.Absolute);
+            var window = (Window)AvaloniaXamlLoader.Load(uri);
+            return window;
         }
 
         public static void Start(Window window)
