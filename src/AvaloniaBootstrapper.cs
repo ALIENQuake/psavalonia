@@ -9,6 +9,18 @@ using System.Threading;
 
 namespace PSAvalonia
 {
+    public class BootstrapWindow : Window
+    {
+        public BootstrapWindow(string xaml)
+        {
+            InitializeComponent(xaml);
+        }
+
+        private void InitializeComponent(string xaml)
+        {
+            AvaloniaXamlLoader.Load(xaml);
+        }
+    }
     public static class AvaloniaBootstrapper
     {
         public static App App;
@@ -31,8 +43,8 @@ namespace PSAvalonia
 
         public static Window Load(string xaml)
         {
-            var loader = new AvaloniaXamlLoader();
-            return (Window)loader.Load(xaml);
+            BootstrapWindow win = new BootstrapWindow(xaml);
+            return win;
         }
 
         public static void Start(Window window)
