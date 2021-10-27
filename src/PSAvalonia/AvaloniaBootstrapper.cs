@@ -2,17 +2,18 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using System.Collections.Generic;
 using Avalonia.ReactiveUI;
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System;
 
 namespace PSAvalonia
 {
     public static class AvaloniaBootstrapper
     {
         public static App App;
+        //public static Window MainWindow;
         private static CancellationTokenSource _source;
         private static List<Window> _usedWindows = new List<Window>();
 
@@ -20,7 +21,9 @@ namespace PSAvalonia
         {
             var lifetime = new ClassicDesktopStyleApplicationLifetime();
             lifetime.ShutdownMode = ShutdownMode.OnMainWindowClose;
-            return AppBuilder.Configure<App>().UseReactiveUI().UsePlatformDetect().SetupWithLifetime(lifetime);
+            //lifetime.MainWindow = MainWindow;
+            AppBuilder app = AppBuilder.Configure<App>().UseReactiveUI().UsePlatformDetect().SetupWithLifetime(lifetime);
+            return app;
         }
 
         static AvaloniaBootstrapper()
@@ -32,10 +35,16 @@ namespace PSAvalonia
 
         public static Window Load(string xaml)
         {
-            Uri uri = new Uri(xaml, UriKind.Absolute);
-            var window = (Window)AvaloniaXamlLoader.Load(uri);
-            return window;
+            var win = (Window)AvaloniaRuntimeXamlLoader.Load(xaml);
+            return win;
         }
+        
+        //public static Window Load(string xaml)
+        //{
+        //    System.Uri uri = new System.Uri(xaml, System.UriKind.Absolute);
+        //    var win = (Window)AvaloniaXamlLoader.Load(uri);
+        //    return win;
+        //}
 
         public static void Start(Window window)
         {
@@ -47,9 +56,10 @@ namespace PSAvalonia
             _usedWindows.Add(window);
 
             _source = new CancellationTokenSource();
-
+            
             window.Show();
             window.Closing += Window_Closing;
+            //App.OnFrameworkInitializationCompleted();
 
             App.Run(_source.Token);
         }
@@ -59,5 +69,4 @@ namespace PSAvalonia
             _source.Cancel();
         }
     }
-
 }
